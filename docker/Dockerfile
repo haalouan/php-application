@@ -5,13 +5,13 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd
+    && docker-php-ext-install gd \
+    && docker-php-ext-install pdo pdo_mysql \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PDO and PDO_MySQL extension
-RUN docker-php-ext-install pdo pdo_mysql
-
-# Set the working directory
 WORKDIR /var/www/html
 
-# Expose port 80
+RUN chown -R www-data:www-data /var/www/html
+
 EXPOSE 80
+
